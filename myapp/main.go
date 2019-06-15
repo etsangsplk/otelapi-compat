@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/tigrannajaryan/otelapi-compat/database"
 	"github.com/tigrannajaryan/otelapi-compat/httpserver"
 	"github.com/tigrannajaryan/otelapi-compat/opentelemetryv2"
 )
@@ -30,4 +31,6 @@ func myHandler(ctx context.Context) {
 	}
 	defer resp.Body.Close()
 	ioutil.ReadAll(resp.Body)
+
+	database.ExecQuery(ctx, "SELECT * FROM opentelemetry")
 }

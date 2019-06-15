@@ -32,3 +32,12 @@ func (span *Span) Finish(endTimeUnixEpoch int) {
 		span.impl.Finish(nil)
 	}
 }
+
+// FromContext returns the Span stored in a context, or nil if there isn't one.
+func FromContext(ctx context.Context) *Span {
+	span := opentelemetryv2.FromContext(ctx)
+	if span == nil {
+		return nil
+	}
+	return &Span{impl: span}
+}
