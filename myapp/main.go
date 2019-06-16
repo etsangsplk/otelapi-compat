@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/tigrannajaryan/otelapi-compat/database"
-	"github.com/tigrannajaryan/otelapi-compat/httpserver"
-	"github.com/tigrannajaryan/otelapi-compat/opentelemetryv2"
+	v2 "github.com/tigrannajaryan/otelapi-compat/opentelemetry/v2"
+	"github.com/tigrannajaryan/otelapi-compat/third-party/database"
+	"github.com/tigrannajaryan/otelapi-compat/third-party/httpserver"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func myHandler(ctx context.Context) {
 	// However we are calling OpenTelemetry API V2 and seamlessly getting
 	// getting a child span as opentelemetryv2.Span type.
 
-	_, childSpan := opentelemetryv2.StartSpan(ctx, "client-request")
+	_, childSpan := v2.StartSpan(ctx, "client-request")
 	defer childSpan.Finish(nil)
 
 	resp, err := http.Get("http://example.com/")

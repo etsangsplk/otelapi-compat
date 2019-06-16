@@ -1,23 +1,23 @@
-// Package opentelemetryv1 is a shim that provides OpenTelemetry API v1
+// Package opentelemetry is a shim that provides OpenTelemetry API v1
 // by mapping the calls to API v2.
-package opentelemetryv1
+package opentelemetry
 
 import (
 	"context"
 	"time"
 
-	"github.com/tigrannajaryan/otelapi-compat/opentelemetryv2"
+	v2 "github.com/tigrannajaryan/otelapi-compat/opentelemetry/v2"
 )
 
 // Span v1
 type Span struct {
-	impl *opentelemetryv2.Span
+	impl *v2.Span
 }
 
 // StartSpan creates a new child span if context has a root
 // span or a child if there is no root.
 func StartSpan(ctx context.Context, operation string) (context.Context, *Span) {
-	ctx, span := opentelemetryv2.StartSpan(ctx, operation)
+	ctx, span := v2.StartSpan(ctx, operation)
 	return ctx, &Span{impl: span}
 }
 
@@ -35,7 +35,7 @@ func (span *Span) Finish(endTimeUnixEpoch int) {
 
 // FromContext returns the Span stored in a context, or nil if there isn't one.
 func FromContext(ctx context.Context) *Span {
-	span := opentelemetryv2.FromContext(ctx)
+	span := v2.FromContext(ctx)
 	if span == nil {
 		return nil
 	}
