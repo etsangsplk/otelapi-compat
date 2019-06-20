@@ -5,12 +5,15 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	v2sdk "github.com/tigrannajaryan/otelapi-compat/opentelemetry/sdk/v2"
 	v2 "github.com/tigrannajaryan/otelapi-compat/opentelemetry/v2"
 	"github.com/tigrannajaryan/otelapi-compat/third-party/database"
 	"github.com/tigrannajaryan/otelapi-compat/third-party/httpserver"
 )
 
 func main() {
+	v2sdk.EnableSDK()
+
 	srv := &httpserver.Srv{}
 
 	srv.AddHandler("/test", myHandler)
